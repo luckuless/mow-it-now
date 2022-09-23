@@ -4,23 +4,19 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import com.mow.Constants;
 import com.mow.model.Orientation;
 import com.mow.model.Tondeuse;
 import com.mow.model.Tondeuses;
 import com.mow.service.FileService;
 
 import lombok.NoArgsConstructor;
-import lombok.Builder.Default;
 
 @NoArgsConstructor
 public class FileServiceImpl implements FileService {
-
 
     @Override
     public Tondeuses readInstructionsFile(String fileName) {
@@ -29,7 +25,7 @@ public class FileServiceImpl implements FileService {
         int maxY = 0;
         String positionTondeuse;
         String instructionsTondeuse;
-        List<Tondeuse> listTondeuses = Collections.emptyList();
+        List<Tondeuse> listTondeuses = new ArrayList<>();
 
         try {
             reader = new FileReader(fileName);
@@ -39,7 +35,7 @@ public class FileServiceImpl implements FileService {
 
                 String premiereLigne = bufferedReader.readLine();
                 if (Objects.nonNull(premiereLigne)) {
-                    String[] coinSuperieur =  premiereLigne.split(" ");
+                    String[] coinSuperieur = premiereLigne.split(" ");
                     maxX = Integer.parseInt(coinSuperieur[0]);
                     maxY = Integer.parseInt(coinSuperieur[0]);
                 }
@@ -49,22 +45,22 @@ public class FileServiceImpl implements FileService {
                     instructionsTondeuse = bufferedReader.readLine();
                     String[] positionInitiale;
 
-
-                    if (Objects.nonNull(positionTondeuse) && Objects.nonNull(instructionsTondeuse)){
+                    if (Objects.nonNull(positionTondeuse) && Objects.nonNull(instructionsTondeuse)) {
                         if (positionTondeuse.matches("\\d+\\s\\d+\\s[NESW]{1}")) {
                             positionInitiale = positionTondeuse.split("\\s");
 
                             if (instructionsTondeuse.matches("[DGA]+")) {
                                 Orientation orientationTondeuse = Orientation.builder()
-                                                                .notationCardinale(positionInitiale[2])
-                                                                .position(getOrientationKey(positionInitiale[2]))
-                                                                .build();
+                                        .notationCardinale(positionInitiale[2])
+                                        .position(getOrientationKey(positionInitiale[2]))
+                                        .build();
                                 Tondeuse tondeuse = Tondeuse.builder()
-                                .coordonneesX(Integer.parseInt(positionInitiale[0]))
-                                .coordonneesY(Integer.parseInt(positionInitiale[1]))
-                                .orientation(orientationTondeuse)
-                                .build();
-                                
+                                        .coordonneesX(Integer.parseInt(positionInitiale[0]))
+                                        .coordonneesY(Integer.parseInt(positionInitiale[1]))
+                                        .instructions(instructionsTondeuse)
+                                        .orientation(orientationTondeuse)
+                                        .build();
+
                                 listTondeuses.add(tondeuse);
                             }
 
@@ -72,7 +68,7 @@ public class FileServiceImpl implements FileService {
                     } else {
                         break;
                     }
-                    
+
                 }
                 reader.close();
                 return Tondeuses.builder()
@@ -80,7 +76,6 @@ public class FileServiceImpl implements FileService {
                         .maxY(maxY)
                         .listTondeuses(listTondeuses)
                         .build();
-
 
             } catch (IOException e) {
                 System.out.println("Error reading file");
@@ -90,13 +85,13 @@ public class FileServiceImpl implements FileService {
             System.out.println("File not found");
         }
         return Tondeuses.builder().build();
-        
+
     }
 
     @Override
     public void writeToOutputFile(String filename, Tondeuses tondeuses) {
         // TODO Auto-generated method stub
-        
+
     }
 
     private int getOrientationKey(String orientation) {
@@ -118,5 +113,5 @@ public class FileServiceImpl implements FileService {
         }
         return key;
     }
-    
+
 }

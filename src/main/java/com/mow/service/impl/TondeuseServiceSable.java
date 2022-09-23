@@ -5,35 +5,59 @@ import java.util.Objects;
 
 import com.mow.Constants;
 import com.mow.model.Tondeuse;
-import com.mow.service.PiloterTondeuse;
+import com.mow.model.Tondeuses;
+import com.mow.service.TondeuseService;
 
 
-public class PiloterTondeuseSable implements PiloterTondeuse {
+public class TondeuseServiceSable implements TondeuseService {
 
-    public PiloterTondeuseSable() {
+    public TondeuseServiceSable() {
     }
 
     @Override
-    public Tondeuse explorer(int maxX, int maxY, Tondeuse tondeuseInitiale, String instructions) {
-        Arrays.asList(instructions.split("")).forEach(
-            i -> {
-                switch(i){
-                    case "A": avancerUneCase(tondeuseInitiale, maxX, maxY);
-                                break;
-                    case "D": orienter(tondeuseInitiale, i);
-                                break;  
-                    case "G": orienter(tondeuseInitiale, i);
-                                break;
+    public void deployerTondeuses(Tondeuses tondeuses) {
 
-                    default: break;
-                }
-                    
-                    
-                
-            }
+        tondeuses.getListTondeuses().forEach(
+            tondeuse -> deployerSingleTondeuse(tondeuse, tondeuses.getMaxX(), tondeuses.getMaxY())
         );
+    }
 
-        return tondeuseInitiale;
+    @Override
+    public void deployerSingleTondeuse(Tondeuse tondeuse, int maxX, int maxY){
+        Arrays.asList(tondeuse.getInstructions().split("")).forEach(
+                    i -> {
+                        switch(i){
+                            case "A": avancerUneCase(tondeuse, maxX, maxY);
+                                        break;
+                            case "D": orienter(tondeuse, i);
+                                        break;  
+                            case "G": orienter(tondeuse, i);
+                                        break;
+
+                            default: break;
+                        }
+                            
+                    }
+                );
+    }
+
+    @Override
+    public void deployerSingleTondeuse(Tondeuse tondeuse, int maxX, int maxY, String instructions){
+        Arrays.asList(instructions.split("")).forEach(
+                    i -> {
+                        switch(i){
+                            case "A": avancerUneCase(tondeuse, maxX, maxY);
+                                        break;
+                            case "D": orienter(tondeuse, i);
+                                        break;  
+                            case "G": orienter(tondeuse, i);
+                                        break;
+
+                            default: break;
+                        }
+                            
+                    }
+                );
     }
 
     @Override

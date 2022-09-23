@@ -10,5 +10,10 @@ import lombok.Setter;
 public class Tondeuse {
     private int coordonneesX;
     private int coordonneesY;
-    private Orientation orientation;   
+    private String instructions;
+    private Orientation orientation;
+    @Override
+    public String toString() {
+        return "" + coordonneesX + " " + coordonneesY + " " + orientation.notationCardinale;
+    }   
 }
