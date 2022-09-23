@@ -66,16 +66,16 @@ public class TondeuseServiceSable implements TondeuseService {
         boolean isX = true;
 
         switch(tondeuse.getOrientation().getNotationCardinale()){
-            case "N": nouvelleCoordonnee = tondeuse.getCoordonneesY() + 1;
+            case N: nouvelleCoordonnee = tondeuse.getCoordonneesY() + 1;
                         isX = false;
                         break;
-            case "E": nouvelleCoordonnee = tondeuse.getCoordonneesX() + 1;
+            case E: nouvelleCoordonnee = tondeuse.getCoordonneesX() + 1;
                         isX = true;
                         break;
-            case "S": nouvelleCoordonnee = tondeuse.getCoordonneesY() - 1;
+            case S: nouvelleCoordonnee = tondeuse.getCoordonneesY() - 1;
                         isX = false;
                         break;
-            case "W": nouvelleCoordonnee = tondeuse.getCoordonneesX() - 1;
+            case W: nouvelleCoordonnee = tondeuse.getCoordonneesX() - 1;
                         isX = true;
                         break;
         }
@@ -94,15 +94,15 @@ public class TondeuseServiceSable implements TondeuseService {
     @Override
     public void orienter(Tondeuse tondeuse, String orientation) {
         if (Objects.equals(orientation, "D")){
-            int nouvelleOrientation = (tondeuse.getOrientation().getPosition() + 1) % 4; 
+            int nouvelleOrientation = (tondeuse.getOrientation().getPosition() + 1) % Constants.SIZE_NOTATIONS_CARDINALES; 
             tondeuse.getOrientation().setPosition(nouvelleOrientation);
-            tondeuse.getOrientation().setNotationCardinale(Constants.ORIENTATIONS_POSSIBLES.get(nouvelleOrientation));
+            tondeuse.getOrientation().setNotationCardinale(Constants.NOTATIONS_CARDINALES.get(nouvelleOrientation));
         }
         else{
             if (Objects.equals(orientation, "G")){
-                int nouvelleOrientation = (tondeuse.getOrientation().getPosition() + 4 - 1) % 4; 
+                int nouvelleOrientation = (tondeuse.getOrientation().getPosition() + Constants.SIZE_NOTATIONS_CARDINALES - 1) % Constants.SIZE_NOTATIONS_CARDINALES; 
                 tondeuse.getOrientation().setPosition(nouvelleOrientation);
-                tondeuse.getOrientation().setNotationCardinale(Constants.ORIENTATIONS_POSSIBLES.get(nouvelleOrientation));
+                tondeuse.getOrientation().setNotationCardinale(Constants.NOTATIONS_CARDINALES.get(nouvelleOrientation));
             }
         }
         

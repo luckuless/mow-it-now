@@ -11,7 +11,6 @@ public interface TondeuseService {
 
     public void deployerSingleTondeuse(Tondeuse tondeuse, int maxX, int maxY, String instructions);
 
-
     public void orienter(Tondeuse tondeuse, String orientation);
 
     public void avancerUneCase(Tondeuse tondeuse, int maxX, int maxY);

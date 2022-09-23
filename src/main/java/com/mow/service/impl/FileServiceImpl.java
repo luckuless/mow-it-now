@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.mow.enums.NotationCardinale;
 import com.mow.model.Orientation;
 import com.mow.model.Tondeuse;
 import com.mow.model.Tondeuses;
@@ -51,7 +52,7 @@ public class FileServiceImpl implements FileService {
 
                             if (instructionsTondeuse.matches("[DGA]+")) {
                                 Orientation orientationTondeuse = Orientation.builder()
-                                        .notationCardinale(positionInitiale[2])
+                                        .notationCardinale(NotationCardinale.valueOf(positionInitiale[2]))
                                         .position(getOrientationKey(positionInitiale[2]))
                                         .build();
                                 Tondeuse tondeuse = Tondeuse.builder()

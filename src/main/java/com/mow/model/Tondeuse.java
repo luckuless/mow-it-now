@@ -8,6 +8,8 @@ import lombok.Setter;
 @Getter
 @Builder
 public class Tondeuse {
+
+    private String identifiant;
     private int coordonneesX;
     private int coordonneesY;
     private String instructions;

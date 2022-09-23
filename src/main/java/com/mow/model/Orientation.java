@@ -1,5 +1,7 @@
 package com.mow.model;
 
+import com.mow.enums.NotationCardinale;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,7 +11,7 @@ import lombok.Setter;
 @Builder
 public class Orientation {
 
-    String notationCardinale;
+    NotationCardinale notationCardinale;
     int position;
     
 }

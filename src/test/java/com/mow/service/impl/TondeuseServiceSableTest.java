@@ -7,6 +7,7 @@ import java.util.Arrays;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.mow.enums.NotationCardinale;
 import com.mow.model.Orientation;
 import com.mow.model.Tondeuse;
 import com.mow.model.Tondeuses;
@@ -23,29 +24,29 @@ public class TondeuseServiceSableTest {
     void setTondeuses() {
 
         Orientation orientation1 = Orientation.builder()
-                .notationCardinale("N")
+                .notationCardinale(NotationCardinale.N)
                 .position(0)
                 .build();
 
         tondeuse1 = Tondeuse.builder()
+                .identifiant("tondeuse1")
                 .coordonneesX(1)
                 .coordonneesY(2)
                 .orientation(orientation1)
                 .build();
 
         Orientation orientation2 = Orientation.builder()
-                .notationCardinale("E")
+                .notationCardinale(NotationCardinale.E)
                 .position(1)
                 .build();
 
         tondeuse2 = Tondeuse.builder()
+                .identifiant("tondeuse2")
                 .coordonneesX(3)
                 .coordonneesY(3)
                 .orientation(orientation2)
                 .instructions("AADAADADDA")
                 .build();
-
-        
 
     }
 
@@ -61,16 +62,22 @@ public class TondeuseServiceSableTest {
 
         tondeuseService.deployerTondeuses(tondeuses);
 
-        tondeuse1 = tondeuses.getListTondeuses().get(0);
-        tondeuse2 = tondeuses.getListTondeuses().get(1);
+        tondeuse1 = tondeuses.getListTondeuses().stream()
+                .filter(tondeuse -> tondeuse.getIdentifiant().equalsIgnoreCase("tondeuse1"))
+                .findFirst()
+                .get();
+        tondeuse2 = tondeuses.getListTondeuses().stream()
+                .filter(tondeuse -> tondeuse.getIdentifiant().equalsIgnoreCase("tondeuse2"))
+                .findFirst()
+                .get();
 
         assertEquals(1, tondeuse1.getCoordonneesX());
         assertEquals(3, tondeuse1.getCoordonneesY());
-        assertEquals("N", tondeuse1.getOrientation().getNotationCardinale());
+        assertEquals(NotationCardinale.N, tondeuse1.getOrientation().getNotationCardinale());
 
-        assertEquals(1, tondeuse2.getCoordonneesX());
-        assertEquals(3, tondeuse2.getCoordonneesY());
-        assertEquals("E", tondeuse2.getOrientation().getNotationCardinale());
+        assertEquals(5, tondeuse2.getCoordonneesX());
+        assertEquals(1, tondeuse2.getCoordonneesY());
+        assertEquals(NotationCardinale.E, tondeuse2.getOrientation().getNotationCardinale());
 
     }
 
@@ -82,11 +89,11 @@ public class TondeuseServiceSableTest {
 
         assertEquals(1, tondeuse1.getCoordonneesX());
         assertEquals(3, tondeuse1.getCoordonneesY());
-        assertEquals("N", tondeuse1.getOrientation().getNotationCardinale());
+        assertEquals(NotationCardinale.N, tondeuse1.getOrientation().getNotationCardinale());
 
         assertEquals(5, tondeuse2.getCoordonneesX());
         assertEquals(1, tondeuse2.getCoordonneesY());
-        assertEquals("E", tondeuse2.getOrientation().getNotationCardinale());
+        assertEquals(NotationCardinale.E, tondeuse2.getOrientation().getNotationCardinale());
 
     }
 
@@ -106,13 +113,13 @@ public class TondeuseServiceSableTest {
     @Test
     void testOrienter() {
         tondeuseService.orienter(tondeuse1, "D");
-        assertEquals("E", tondeuse1.getOrientation().getNotationCardinale());
+        assertEquals(NotationCardinale.E, tondeuse1.getOrientation().getNotationCardinale());
 
         tondeuseService.orienter(tondeuse2, "G");
-        assertEquals("N", tondeuse2.getOrientation().getNotationCardinale());
+        assertEquals(NotationCardinale.N, tondeuse2.getOrientation().getNotationCardinale());
 
         tondeuseService.orienter(tondeuse2, "G");
-        assertEquals("W", tondeuse2.getOrientation().getNotationCardinale());
+        assertEquals(NotationCardinale.W, tondeuse2.getOrientation().getNotationCardinale());
     }
 
 }
