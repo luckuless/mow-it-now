@@ -53,7 +53,7 @@ public class FileServiceImpl implements FileService {
                             if (instructionsTondeuse.matches("[DGA]+")) {
                                 Orientation orientationTondeuse = Orientation.builder()
                                         .notationCardinale(NotationCardinale.valueOf(positionInitiale[2]))
-                                        .position(getOrientationKey(positionInitiale[2]))
+                                        .position(getOrientationKey(NotationCardinale.valueOf(positionInitiale[2])))
                                         .build();
                                 Tondeuse tondeuse = Tondeuse.builder()
                                         .coordonneesX(Integer.parseInt(positionInitiale[0]))
@@ -95,22 +95,21 @@ public class FileServiceImpl implements FileService {
 
     }
 
-    private int getOrientationKey(String orientation) {
+    private int getOrientationKey(NotationCardinale notationCardinale) {
         int key = 0;
-        switch (orientation) {
-            case "N":
+        switch (notationCardinale) {
+            case N:
                 key = 0;
                 break;
-            case "E":
+            case E:
                 key = 1;
                 break;
-            case "S":
+            case S:
                 key = 2;
                 break;
-            case "W":
+            case W:
                 key = 3;
                 break;
-
         }
         return key;
     }
