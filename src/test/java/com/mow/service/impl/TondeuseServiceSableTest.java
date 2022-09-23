@@ -16,7 +16,6 @@ public class TondeuseServiceSableTest {
 
     public final TondeuseService tondeuseService = new TondeuseServiceSable();
 
-    private Tondeuses tondeuses;
     private Tondeuse tondeuse1;
     private Tondeuse tondeuse2;
 
@@ -54,7 +53,7 @@ public class TondeuseServiceSableTest {
     void testDeployerTondeuses() {
 
         tondeuse1.setInstructions("GAGAGAGAA");
-        tondeuses = Tondeuses.builder()
+        Tondeuses tondeuses = Tondeuses.builder()
                 .listTondeuses(Arrays.asList(tondeuse1, tondeuse2))
                 .maxX(5)
                 .maxY(5)
@@ -97,9 +96,11 @@ public class TondeuseServiceSableTest {
         assertEquals(4, tondeuse2.getCoordonneesX());
         assertEquals(3, tondeuse2.getCoordonneesY());
 
-        tondeuseService.avancerUneCase(tondeuse1, 5, 5);
-        assertEquals(4, tondeuse2.getCoordonneesX());
-        assertEquals(3, tondeuse2.getCoordonneesY());
+        tondeuse1.setCoordonneesX(5);
+        tondeuse1.setCoordonneesY(4);
+        tondeuseService.avancerUneCase(tondeuse1, 5, 4);
+        assertEquals(5, tondeuse1.getCoordonneesX());
+        assertEquals(4, tondeuse1.getCoordonneesY());
     }
 
     @Test
